@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XIX ғ. 60-90 жж. Көші-қон мәселелері</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0b132b;
+      --bg-side: #1c2541;
+      --card-bg: #1e293b;
+      --accent-gold: #f59e0b;
+      --accent-cyan: #38bdf8;
+      --text-light: #f8fafc;
+      --text-gray: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-light);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Сол жақ панель (Sidebar) */
+    .sidebar {
+      width: 260px;
+      background-color: var(--bg-side);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 20px 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 25px;
+      color: var(--text-gray);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      color: var(--text-light);
+      background-color: rgba(56, 189, 248, 0.1);
+      border-left: 4px solid var(--accent-cyan);
+    }
+
+    .sidebar-menu a i {
+      font-size: 1.2rem;
+      width: 20px;
+    }
+
+    /* Негізгі контент */
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      padding: 30px;
+      max-width: 1200px;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .header-box {
+      background: linear-gradient(135deg, rgba(30,41,59,0.8), rgba(15,23,42,0.9));
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .header-box h1 {
+      color: var(--accent-cyan);
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .header-box p {
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    /* Карточкалар карточкасы */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-gold);
+    }
+
+    .card h3 {
+      color: var(--accent-gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Бейневидеолар бөлімі */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 25px;
+    }
+
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-info {
+      padding: 15px;
+    }
+
+    .video-info h4 {
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .video-info p {
+      color: var(--text-gray);
+      font-size: 0.85rem;
+    }
+
+    /* Тест және Сауалнама */
+    .quiz-container {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-cyan);
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, var(--accent-cyan), #0284c7);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .question-box {
+      margin-bottom: 25px;
+      background: rgba(255,255,255,0.03);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .question-box h4 {
+      margin-bottom: 15px;
+      color: var(--accent-gold);
+    }
+
+    .options label {
+      display: block;
+      padding: 10px 15px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .options label:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .options input {
+      margin-right: 10px;
+    }
+
+    /* Таблица нәтижелер */
+    .table-container {
+      margin-top: 30px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-side);
+      color: var(--accent-cyan);
+    }
+
+    td {
+      color: var(--text-gray);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+      }
+      .sidebar-header span, .sidebar-menu span {
+        display: none;
+      }
+      .main-content {
+        margin-left: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Сол жақ панель (Sidebar) -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <i class="fa-solid fa-landmark"></i>
+      <span>Тарих Жобасы</span>
+    </div>
+    <ul class="sidebar-menu">
+      <li>
+        <a onclick="showSection('home')" class="active" id="nav-home">
+          <i class="fa-solid fa-house"></i>
+          <span>Басты бет</span>
+        </a>
+      </li>
+      <li>
+        <a onclick="showSection('topics')" id="nav-topics">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Деректер & Кезеңдер</span>
+        </a>
+      </li>
+      <li>
+        <a onclick="showSection('videos')" id="nav-videos">
+          <i class="fa-solid fa-video"></i>
+          <span>Бейневидеолар</span>
+        </a>
+      </li>
+      <li>
+        <a onclick="showSection('quiz')" id="nav-quiz">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Тест & Сауалнама</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Негізгі контент -->
+  <main class="main-content">
+
+    <!-- 1. БАСТЫ БЕТ -->
+    <section id="home" class="section active">
+      <div class="header-box">
+        <h1>XIX ғ. 60-90 жылдарындағы көші-қон мәселесі</h1>
+        <p>Орыс, ұйғыр, дүңген шаруаларын Қазақстан аймақтарына орналастыру ерекшеліктері, орыстандыру саясаты мен бекіністердің салынуы бойынша зерттеу жобасы.</p>
+      </div>
+
+      <div class="grid-cards">
+        <div class="card">
+          <h3><i class="fa-solid fa-users-rectangle"></i> Әлеуметтік құрам</h3>
+          <p>Орыс шаруалары, ұйғырлар мен дүңгендердің Жетісу және Оңтүстік Қазақстан өңірлеріне қоныс аудару себептері мен салдарлары.</p>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-shield-halved"></i> Бекіністердің салынуы</h3>
+          <p>Отарлау саясатының басты 5 бағыты және әскери-әкімшілік бекіністердің негізделуі.</p>
+        </div>
+        <div class="card">
+          <h3><i class="fa-solid fa-chart-pie"></i> Сауалнама Нәтижесі</h3>
+          <p>Универ айналасында 20 студент/тұрғын арасында жүргізілген интерактивті сауалнама қорытындылары.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ДЕРЕКТЕР БӨЛІМІ -->
+    <section id="topics" class="section">
+      <div class="header-box">
+        <h1>Тақырыптық Материалдар</h1>
+        <p>XIX ғасырдың екінші жартысындағы отарлау саясаты мен қоныс аудару процесстерінің негізгі бағыттары.</p>
+      </div>
+
+      <div class="grid-cards">
+        <div class="card">
+          <h3>1. Орыс шаруаларын қоныстандыру</h3>
+          <p>1868 жылғы «Уақытша ережелер» бойынша қазақ жерлері мемлекеттік меншік деп жарияланып, ішкі Ресейден шаруаларды жаппай көшіру басталды.</p>
+        </div>
+        <div class="card">
+          <h3>2. Ұйғыр мен Дүңгендердің көші-қоны</h3>
+          <p>1881 жылғы Петербург келісімінен кейін Құлжа өңірінен Жетісуға мыңдаған ұйғырлар мен дүңгендер қоныс аударды.</p>
+        </div>
+        <div class="card">
+          <h3>3. Отарлаудың басты бағыттары</h3>
+          <p>Шұрайлы жерлерді тартып алу, әскери бекіністер салу, демографиялық балансты өзгерту және дәстүрлі шаруашылықты күйзеліске ұшырату.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. БЕЙНЕВИДЕОЛАР БӨЛІМІ -->
+    <section id="videos" class="section">
+      <div class="header-box">
+        <h1>Жобалық Бейневидеолар</h1>
+        <p>Университет айналасында жүргізілген 20 адамдық сауалнама және тақырыптық зерттеу видеолары.</p>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-container">
+            <!-- YouTube видео ID-сін осы жерге қоя аласыз -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Универ айналасындағы сауалнама (20 адам)</h4>
+            <p>Студенттер мен тұрғындардың тарихи білімін тексеру видео-сұхбаты.</p>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>XIX ғ. Көші-қон саясаты — Сараптама</h4>
+            <p>Жобалық топтың тақырып бойынша дайындаған 5 минуттық талдау видеосы.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ТЕСТ ЖӘНЕ САУАЛНАМА -->
+    <section id="quiz" class="section">
+      <div class="header-box">
+        <h1>Интерактивті Тест & Сауалнама</h1>
+        <p>Тақырып бойынша біліміңізді тексеріңіз. Нәтижелер төмендегі кестеде сақталады.</p>
+      </div>
+
+      <div class="quiz-container">
+        <div id="quiz-start">
+          <div class="input-group">
+            <label for="username">Толық аты-жөніңіз:</label>
+            <input type="text" id="username" placeholder="Мысалы: Арман Әлиев">
+          </div>
+          <div class="input-group">
+            <label for="usergroup">Тобыңыз / Сыныбыңыз:</label>
+            <input type="text" id="usergroup" placeholder="Мысалы: ИТ-2201">
+          </div>
+          <button class="btn" onclick="startQuiz()">Тестті бастау</button>
+        </div>
+
+        <div id="quiz-questions" style="display: none;">
+          <form id="quiz-form">
+            
+            <div class="question-box">
+              <h4>1. 1881 жылы Құлжа өлкесінен Жетісуға қоныс аударған халықтар?</h4>
+              <div class="options">
+                <label><input type="radio" name="q1" value="A"> А) Өзбектер мен тәжіктер</label>
+                <label><input type="radio" name="q1" value="B"> B) Ұйғырлар мен дүңгендер</label>
+                <label><input type="radio" name="q1" value="C"> C) Түркімендер мен ноғайлар</label>
+              </div>
+            </div>
+
+            <div class="question-box">
+              <h4>2. XIX ғ. 60 жылдарындағы реформа бойынша қазақ жерлері кімнің меншігі болып жарияланды?</h4>
+              <div class="options">
+                <label><input type="radio" name="q2" value="A"> А) Ресей империясының мемлекеттік меншігі</label>
+                <label><input type="radio" name="q2" value="B"> B) Қазақ хандарының меншігі</label>
+                <label><input type="radio" name="q2" value="C"> C) Мешіттердің меншігі</label>
+              </div>
+            </div>
+
+            <div class="question-box">
+              <h4>3. Орыс шаруаларын Жетісуға қоныстандыруды басқарған генерал-губернатор?</h4>
+              <div class="options">
+                <label><input type="radio" name="q3" value="A"> А) Кенесары Қасымов</label>
+                <label><input type="radio" name="q3" value="B"> B) Г.А. Колпаковский</label>
+                <label><input type="radio" name="q3" value="C"> C) М.Сперский</label>
+              </div>
+            </div>
+
+            <button type="button" class="btn" onclick="submitQuiz()">Нәтижені тапсыру</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Нәтижелер Кестесі -->
+      <div class="table-container">
+        <h2>Тапсырғандар тізімі (Нәтижелер)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Аты-жөні</th>
+              <th>Тобы</th>
+              <th>Балл</th>
+              <th>Уақыты</th>
+            </tr>
+          </thead>
+          <tbody id="results-table">
+            <!-- Деректер JS арқылы қосылады -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Бөлімдерді ауыстыру функциясы
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+
+      document.getElementById(sectionId).classList.add('active');
+      document.getElementById('nav-' + sectionId).classList.add('active');
+    }
+
+    // Тест сақтау логкасы
+    let currentUser = "";
+    let currentGroup = "";
+
+    function startQuiz() {
+      const name = document.getElementById('username').value;
+      const group = document.getElementById('usergroup').value;
+
+      if (!name || !group) {
+        alert("Өтініш, аты-жөніңіз бен тобыңызды енгізіңіз!");
+        return;
+      }
+
+      currentUser = name;
+      currentGroup = group;
+
+      document.getElementById('quiz-start').style.display = 'none';
+      document.getElementById('quiz-questions').style.display = 'block';
+    }
+
+    function submitQuiz() {
+      const answers = { q1: 'B', q2: 'A', q3: 'B' };
+      let score = 0;
+
+      const form = document.getElementById('quiz-form');
+      const formData = new FormData(form);
+
+      for (let [q, ans] of Object.entries(answers)) {
+        if (formData.get(q) === ans) {
+          score++;
+        }
+      }
+
+      const resultData = {
+        name: currentUser,
+        group: currentGroup,
+        score: score + " / 3",
+        date: new Date().toLocaleTimeString()
+      };
+
+      saveResult(resultData);
+      loadResults();
+
+      alert(`Тест аяқталды! Сіздің нәтижеңіз: ${score} / 3`);
+      
+      // Форманы калпына келтіру
+      document.getElementById('quiz-start').style.display = 'block';
+      document.getElementById('quiz-questions').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('usergroup').value = '';
+      form.reset();
+    }
+
+    function saveResult(data) {
+      let results = JSON.parse(localStorage.getItem('history_results') || '[]');
+      results.push(data);
+      localStorage.setItem('history_results', JSON.stringify(results));
+    }
+
+    function loadResults() {
+      let results = JSON.parse(localStorage.getItem('history_results') || '[]');
+      let tbody = document.getElementById('results-table');
+      tbody.innerHTML = '';
+
+      results.forEach(res => {
+        let tr = `<tr>
+          <td>${res.name}</td>
+          <td>${res.group}</td>
+          <td>${res.score}</td>
+          <td>${res.date}</td>
+        </tr>`;
+        tbody.innerHTML += tr;
+      });
+    }
+
+    // Бет жүктелгенде нәтижелерді жүктеу
+    window.onload = loadResults;
+  </script>
+</body>
+</html>
